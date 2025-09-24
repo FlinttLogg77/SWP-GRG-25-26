@@ -1,0 +1,32 @@
+generator client1 {
+  provider = "prisma-client-js"
+}
+
+datasource db1 {
+  provider = "sqlite"
+  url      = "file:C:/Users/manta/OneDrive/Dokumente/HTL_Spengergasse/5AHWII/SWP GRG/musik.db"
+}
+
+// Artist-Tabelle
+model Artist {
+  id         Int         @id @default(autoincrement())
+  name       String      @unique
+  instrument Instrument? @relation(fields: [instrumentId], references: [id])
+  instrumentId Int?
+  style      Style?      @relation(fields: [styleId], references: [id])
+  styleId    Int?
+}
+
+// Instrument-Tabelle
+model Instrument {
+  id      Int      @id @default(autoincrement())
+  name    String   @unique
+  artists Artist[]
+}
+
+// Style-Tabelle
+model Style {
+  id      Int      @id @default(autoincrement())
+  name    String   @unique
+  artists Artist[]
+}

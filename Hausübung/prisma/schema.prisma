@@ -1,12 +1,51 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:C:/Users/manta/OneDrive/Dokumente/HTL_Spengergasse/5AHWII/SWP GRG/hmmm.db"
+}
+
+// Kategorie-Tabelle
+model Category {
+  id        Int        @id @default(autoincrement())
+  name      String     @unique
+  questions Question[]
+}
+
+// Schwierigkeitsgrad-Tabelle
+model Difficulty {
+  id        Int        @id @default(autoincrement())
+  level     String     @unique
+  questions Question[]
+}
+
+// Fragetyp-Tabelle
+model QuestionType {
+  id        Int        @id @default(autoincrement())
+  name      String     @unique
+  questions Question[]
+}
+
+// Frage-Tabelle
+model Question {
+  id            Int           @id @default(autoincrement())
+  question      String
+  categoryId    Int
+  difficultyId  Int
+  typeId        Int
+  answers       Answer[]
+  category      Category      @relation(fields: [categoryId], references: [id])
+  difficulty    Difficulty    @relation(fields: [difficultyId], references: [id])
+  type          QuestionType  @relation(fields: [typeId], references: [id])
+}
+
+// Antwort-Tabelle
+model Answer {
+  id         Int      @id @default(autoincrement())
+  text       String
+  isCorrect  Boolean
+  questionId Int
+  question   Question  @relation(fields: [questionId], references: [id])
 }
