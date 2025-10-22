@@ -1,0 +1,95 @@
+generator client {
+    provider = "prisma-client"
+    output = "client"
+    runtime = "deno"
+}
+
+datasource db {
+    provider = "sqlite"
+    url      = "file:./dev.db"
+}
+
+model Airline {
+    id        String     @id @default(uuid())
+    name      String
+    aircraft  Aircraft[] @relation("Operates")
+    flights   Flight[]   @relation("OperatesFlights")
+    createdAt DateTime   @default(now())
+    updatedAt DateTime   @updatedAt
+}
+
+model Aircraft {
+    id              String   @id @default(uuid())
+    model           String
+    seats           Int
+    airline         Airline? @relation("Operates", fields: [airlineId], references: [id])
+    airlineId       String?
+    hangarAirport   Airport? @relation("Hangar", fields: [hangarAirportId], references: [id])
+    hangarAirportId String?
+    flights         Flight[]
+    createdAt       DateTime @default(now())
+    updatedAt       DateTime @updatedAt
+}
+
+model Airport {
+    id              String     @id @default(uuid())
+    iata            String?    @unique
+    name            String
+    city            String?
+    country         String?
+    departures      Flight[]   @relation("Departure")
+    arrivals        Flight[]   @relation("Arrival")
+    hangarAircrafts Aircraft[] @relation("Hangar")
+    createdAt       DateTime   @default(now())
+    updatedAt       DateTime   @updatedAt
+}
+
+model Passenger {
+    id        String            @id @default(uuid())
+    fullName  String
+    email     String            @unique
+    flights   FlightPassenger[]
+    createdAt DateTime          @default(now())
+    updatedAt DateTime          @updatedAt
+}
+
+model Flight {
+    id              String            @id @default(uuid())
+    name            String
+    durationMinutes Int
+    departureTime   DateTime
+
+    origin          Airport           @relation("Departure", fields: [originId], references: [id])
+    originId        String
+
+    destination     Airport           @relation("Arrival", fields: [destinationId], references: [id])
+    destinationId   String
+
+    aircraft        Aircraft?         @relation(fields: [aircraftId], references: [id])
+    aircraftId      String?
+
+    airline         Airline?          @relation("OperatesFlights", fields: [airlineId], references: [id])
+    airlineId       String?
+
+    passengers      FlightPassenger[]
+    createdAt       DateTime          @default(now())
+    updatedAt       DateTime          @updatedAt
+
+    @@index([departureTime])
+    @@index([originId])
+    @@index([destinationId])
+    @@index([aircraftId])
+    @@index([airlineId])
+}
+
+model FlightPassenger {
+    flight      Flight   @relation(fields: [flightId], references: [id])
+    flightId    String
+    passenger   Passenger @relation(fields: [passengerId], references: [id])
+    passengerId String
+    seat        String?
+    bookedAt    DateTime  @default(now())
+
+    @@id([flightId, passengerId])
+    @@index([passengerId])
+}

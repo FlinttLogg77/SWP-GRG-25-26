@@ -1,0 +1,16 @@
+{
+  "version": "5",
+  "specifiers": {
+    "npm:@faker-js/faker@^10.1.0": "10.1.0"
+  },
+  "npm": {
+    "@faker-js/faker@10.1.0": {
+      "integrity": "sha512-C3mrr3b5dRVlKPJdfrAXS8+dq+rq8Qm5SNRazca0JKgw1HQERFmrVb0towvMmw5uu8hHKNiQasMaR/tydf3Zsg=="
+    }
+  },
+  "workspace": {
+    "dependencies": [
+      "npm:@faker-js/faker@^10.1.0"
+    ]
+  }
+}
