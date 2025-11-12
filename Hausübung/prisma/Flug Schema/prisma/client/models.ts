@@ -8,6 +8,7 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/Airport.ts'
-export type * from './models/Airplane.ts'
 export type * from './models/Flight.ts'
+export type * from './models/Passenger.ts'
+export type * from './models/Plane.ts'
 export type * from './commonInputTypes.ts'

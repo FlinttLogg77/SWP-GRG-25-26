@@ -22,12 +22,17 @@ export * from './enums.ts';
  */
 export type Airport = Prisma.AirportModel
 /**
- * Model Airplane
- * 
- */
-export type Airplane = Prisma.AirplaneModel
-/**
  * Model Flight
  * 
  */
 export type Flight = Prisma.FlightModel
+/**
+ * Model Passenger
+ * 
+ */
+export type Passenger = Prisma.PassengerModel
+/**
+ * Model Plane
+ * 
+ */
+export type Plane = Prisma.PlaneModel

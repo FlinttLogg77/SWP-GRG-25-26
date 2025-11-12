@@ -28,9 +28,9 @@ export type FlightMinAggregateOutputType = {
   flightNumber: string | null
   departureTime: Date | null
   arrivalTime: Date | null
-  airplaneId: string | null
-  departureAirportId: string | null
-  arrivalAirportId: string | null
+  originId: string | null
+  destinationId: string | null
+  planeId: string | null
 }
 
 export type FlightMaxAggregateOutputType = {
@@ -38,9 +38,9 @@ export type FlightMaxAggregateOutputType = {
   flightNumber: string | null
   departureTime: Date | null
   arrivalTime: Date | null
-  airplaneId: string | null
-  departureAirportId: string | null
-  arrivalAirportId: string | null
+  originId: string | null
+  destinationId: string | null
+  planeId: string | null
 }
 
 export type FlightCountAggregateOutputType = {
@@ -48,9 +48,9 @@ export type FlightCountAggregateOutputType = {
   flightNumber: number
   departureTime: number
   arrivalTime: number
-  airplaneId: number
-  departureAirportId: number
-  arrivalAirportId: number
+  originId: number
+  destinationId: number
+  planeId: number
   _all: number
 }
 
@@ -60,9 +60,9 @@ export type FlightMinAggregateInputType = {
   flightNumber?: true
   departureTime?: true
   arrivalTime?: true
-  airplaneId?: true
-  departureAirportId?: true
-  arrivalAirportId?: true
+  originId?: true
+  destinationId?: true
+  planeId?: true
 }
 
 export type FlightMaxAggregateInputType = {
@@ -70,9 +70,9 @@ export type FlightMaxAggregateInputType = {
   flightNumber?: true
   departureTime?: true
   arrivalTime?: true
-  airplaneId?: true
-  departureAirportId?: true
-  arrivalAirportId?: true
+  originId?: true
+  destinationId?: true
+  planeId?: true
 }
 
 export type FlightCountAggregateInputType = {
@@ -80,9 +80,9 @@ export type FlightCountAggregateInputType = {
   flightNumber?: true
   departureTime?: true
   arrivalTime?: true
-  airplaneId?: true
-  departureAirportId?: true
-  arrivalAirportId?: true
+  originId?: true
+  destinationId?: true
+  planeId?: true
   _all?: true
 }
 
@@ -163,9 +163,9 @@ export type FlightGroupByOutputType = {
   flightNumber: string
   departureTime: Date
   arrivalTime: Date
-  airplaneId: string
-  departureAirportId: string
-  arrivalAirportId: string
+  originId: string
+  destinationId: string
+  planeId: string
   _count: FlightCountAggregateOutputType | null
   _min: FlightMinAggregateOutputType | null
   _max: FlightMaxAggregateOutputType | null
@@ -194,12 +194,13 @@ export type FlightWhereInput = {
   flightNumber?: Prisma.StringFilter<"Flight"> | string
   departureTime?: Prisma.DateTimeFilter<"Flight"> | Date | string
   arrivalTime?: Prisma.DateTimeFilter<"Flight"> | Date | string
-  airplaneId?: Prisma.StringFilter<"Flight"> | string
-  departureAirportId?: Prisma.StringFilter<"Flight"> | string
-  arrivalAirportId?: Prisma.StringFilter<"Flight"> | string
-  airplane?: Prisma.XOR<Prisma.AirplaneScalarRelationFilter, Prisma.AirplaneWhereInput>
-  departureAirport?: Prisma.XOR<Prisma.AirportScalarRelationFilter, Prisma.AirportWhereInput>
-  arrivalAirport?: Prisma.XOR<Prisma.AirportScalarRelationFilter, Prisma.AirportWhereInput>
+  originId?: Prisma.StringFilter<"Flight"> | string
+  destinationId?: Prisma.StringFilter<"Flight"> | string
+  planeId?: Prisma.StringFilter<"Flight"> | string
+  passengers?: Prisma.PassengerListRelationFilter
+  origin?: Prisma.XOR<Prisma.AirportScalarRelationFilter, Prisma.AirportWhereInput>
+  destination?: Prisma.XOR<Prisma.AirportScalarRelationFilter, Prisma.AirportWhereInput>
+  plane?: Prisma.XOR<Prisma.PlaneScalarRelationFilter, Prisma.PlaneWhereInput>
 }
 
 export type FlightOrderByWithRelationInput = {
@@ -207,38 +208,40 @@ export type FlightOrderByWithRelationInput = {
   flightNumber?: Prisma.SortOrder
   departureTime?: Prisma.SortOrder
   arrivalTime?: Prisma.SortOrder
-  airplaneId?: Prisma.SortOrder
-  departureAirportId?: Prisma.SortOrder
-  arrivalAirportId?: Prisma.SortOrder
-  airplane?: Prisma.AirplaneOrderByWithRelationInput
-  departureAirport?: Prisma.AirportOrderByWithRelationInput
-  arrivalAirport?: Prisma.AirportOrderByWithRelationInput
+  originId?: Prisma.SortOrder
+  destinationId?: Prisma.SortOrder
+  planeId?: Prisma.SortOrder
+  passengers?: Prisma.PassengerOrderByRelationAggregateInput
+  origin?: Prisma.AirportOrderByWithRelationInput
+  destination?: Prisma.AirportOrderByWithRelationInput
+  plane?: Prisma.PlaneOrderByWithRelationInput
 }
 
 export type FlightWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  flightNumber?: string
   AND?: Prisma.FlightWhereInput | Prisma.FlightWhereInput[]
   OR?: Prisma.FlightWhereInput[]
   NOT?: Prisma.FlightWhereInput | Prisma.FlightWhereInput[]
+  flightNumber?: Prisma.StringFilter<"Flight"> | string
   departureTime?: Prisma.DateTimeFilter<"Flight"> | Date | string
   arrivalTime?: Prisma.DateTimeFilter<"Flight"> | Date | string
-  airplaneId?: Prisma.StringFilter<"Flight"> | string
-  departureAirportId?: Prisma.StringFilter<"Flight"> | string
-  arrivalAirportId?: Prisma.StringFilter<"Flight"> | string
-  airplane?: Prisma.XOR<Prisma.AirplaneScalarRelationFilter, Prisma.AirplaneWhereInput>
-  departureAirport?: Prisma.XOR<Prisma.AirportScalarRelationFilter, Prisma.AirportWhereInput>
-  arrivalAirport?: Prisma.XOR<Prisma.AirportScalarRelationFilter, Prisma.AirportWhereInput>
-}, "id" | "flightNumber">
+  originId?: Prisma.StringFilter<"Flight"> | string
+  destinationId?: Prisma.StringFilter<"Flight"> | string
+  planeId?: Prisma.StringFilter<"Flight"> | string
+  passengers?: Prisma.PassengerListRelationFilter
+  origin?: Prisma.XOR<Prisma.AirportScalarRelationFilter, Prisma.AirportWhereInput>
+  destination?: Prisma.XOR<Prisma.AirportScalarRelationFilter, Prisma.AirportWhereInput>
+  plane?: Prisma.XOR<Prisma.PlaneScalarRelationFilter, Prisma.PlaneWhereInput>
+}, "id">
 
 export type FlightOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   flightNumber?: Prisma.SortOrder
   departureTime?: Prisma.SortOrder
   arrivalTime?: Prisma.SortOrder
-  airplaneId?: Prisma.SortOrder
-  departureAirportId?: Prisma.SortOrder
-  arrivalAirportId?: Prisma.SortOrder
+  originId?: Prisma.SortOrder
+  destinationId?: Prisma.SortOrder
+  planeId?: Prisma.SortOrder
   _count?: Prisma.FlightCountOrderByAggregateInput
   _max?: Prisma.FlightMaxOrderByAggregateInput
   _min?: Prisma.FlightMinOrderByAggregateInput
@@ -252,9 +255,9 @@ export type FlightScalarWhereWithAggregatesInput = {
   flightNumber?: Prisma.StringWithAggregatesFilter<"Flight"> | string
   departureTime?: Prisma.DateTimeWithAggregatesFilter<"Flight"> | Date | string
   arrivalTime?: Prisma.DateTimeWithAggregatesFilter<"Flight"> | Date | string
-  airplaneId?: Prisma.StringWithAggregatesFilter<"Flight"> | string
-  departureAirportId?: Prisma.StringWithAggregatesFilter<"Flight"> | string
-  arrivalAirportId?: Prisma.StringWithAggregatesFilter<"Flight"> | string
+  originId?: Prisma.StringWithAggregatesFilter<"Flight"> | string
+  destinationId?: Prisma.StringWithAggregatesFilter<"Flight"> | string
+  planeId?: Prisma.StringWithAggregatesFilter<"Flight"> | string
 }
 
 export type FlightCreateInput = {
@@ -262,9 +265,10 @@ export type FlightCreateInput = {
   flightNumber: string
   departureTime: Date | string
   arrivalTime: Date | string
-  airplane: Prisma.AirplaneCreateNestedOneWithoutFlightsInput
-  departureAirport: Prisma.AirportCreateNestedOneWithoutDepartureFlightsInput
-  arrivalAirport: Prisma.AirportCreateNestedOneWithoutArrivalFlightsInput
+  passengers?: Prisma.PassengerCreateNestedManyWithoutFlightsInput
+  origin: Prisma.AirportCreateNestedOneWithoutDepartingFlightsInput
+  destination: Prisma.AirportCreateNestedOneWithoutArrivingFlightsInput
+  plane: Prisma.PlaneCreateNestedOneWithoutFlightsInput
 }
 
 export type FlightUncheckedCreateInput = {
@@ -272,9 +276,10 @@ export type FlightUncheckedCreateInput = {
   flightNumber: string
   departureTime: Date | string
   arrivalTime: Date | string
-  airplaneId: string
-  departureAirportId: string
-  arrivalAirportId: string
+  originId: string
+  destinationId: string
+  planeId: string
+  passengers?: Prisma.PassengerUncheckedCreateNestedManyWithoutFlightsInput
 }
 
 export type FlightUpdateInput = {
@@ -282,9 +287,10 @@ export type FlightUpdateInput = {
   flightNumber?: Prisma.StringFieldUpdateOperationsInput | string
   departureTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   arrivalTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  airplane?: Prisma.AirplaneUpdateOneRequiredWithoutFlightsNestedInput
-  departureAirport?: Prisma.AirportUpdateOneRequiredWithoutDepartureFlightsNestedInput
-  arrivalAirport?: Prisma.AirportUpdateOneRequiredWithoutArrivalFlightsNestedInput
+  passengers?: Prisma.PassengerUpdateManyWithoutFlightsNestedInput
+  origin?: Prisma.AirportUpdateOneRequiredWithoutDepartingFlightsNestedInput
+  destination?: Prisma.AirportUpdateOneRequiredWithoutArrivingFlightsNestedInput
+  plane?: Prisma.PlaneUpdateOneRequiredWithoutFlightsNestedInput
 }
 
 export type FlightUncheckedUpdateInput = {
@@ -292,9 +298,10 @@ export type FlightUncheckedUpdateInput = {
   flightNumber?: Prisma.StringFieldUpdateOperationsInput | string
   departureTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   arrivalTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  airplaneId?: Prisma.StringFieldUpdateOperationsInput | string
-  departureAirportId?: Prisma.StringFieldUpdateOperationsInput | string
-  arrivalAirportId?: Prisma.StringFieldUpdateOperationsInput | string
+  originId?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationId?: Prisma.StringFieldUpdateOperationsInput | string
+  planeId?: Prisma.StringFieldUpdateOperationsInput | string
+  passengers?: Prisma.PassengerUncheckedUpdateManyWithoutFlightsNestedInput
 }
 
 export type FlightCreateManyInput = {
@@ -302,9 +309,9 @@ export type FlightCreateManyInput = {
   flightNumber: string
   departureTime: Date | string
   arrivalTime: Date | string
-  airplaneId: string
-  departureAirportId: string
-  arrivalAirportId: string
+  originId: string
+  destinationId: string
+  planeId: string
 }
 
 export type FlightUpdateManyMutationInput = {
@@ -319,9 +326,9 @@ export type FlightUncheckedUpdateManyInput = {
   flightNumber?: Prisma.StringFieldUpdateOperationsInput | string
   departureTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   arrivalTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  airplaneId?: Prisma.StringFieldUpdateOperationsInput | string
-  departureAirportId?: Prisma.StringFieldUpdateOperationsInput | string
-  arrivalAirportId?: Prisma.StringFieldUpdateOperationsInput | string
+  originId?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationId?: Prisma.StringFieldUpdateOperationsInput | string
+  planeId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type FlightListRelationFilter = {
@@ -339,9 +346,9 @@ export type FlightCountOrderByAggregateInput = {
   flightNumber?: Prisma.SortOrder
   departureTime?: Prisma.SortOrder
   arrivalTime?: Prisma.SortOrder
-  airplaneId?: Prisma.SortOrder
-  departureAirportId?: Prisma.SortOrder
-  arrivalAirportId?: Prisma.SortOrder
+  originId?: Prisma.SortOrder
+  destinationId?: Prisma.SortOrder
+  planeId?: Prisma.SortOrder
 }
 
 export type FlightMaxOrderByAggregateInput = {
@@ -349,9 +356,9 @@ export type FlightMaxOrderByAggregateInput = {
   flightNumber?: Prisma.SortOrder
   departureTime?: Prisma.SortOrder
   arrivalTime?: Prisma.SortOrder
-  airplaneId?: Prisma.SortOrder
-  departureAirportId?: Prisma.SortOrder
-  arrivalAirportId?: Prisma.SortOrder
+  originId?: Prisma.SortOrder
+  destinationId?: Prisma.SortOrder
+  planeId?: Prisma.SortOrder
 }
 
 export type FlightMinOrderByAggregateInput = {
@@ -359,134 +366,92 @@ export type FlightMinOrderByAggregateInput = {
   flightNumber?: Prisma.SortOrder
   departureTime?: Prisma.SortOrder
   arrivalTime?: Prisma.SortOrder
-  airplaneId?: Prisma.SortOrder
-  departureAirportId?: Prisma.SortOrder
-  arrivalAirportId?: Prisma.SortOrder
+  originId?: Prisma.SortOrder
+  destinationId?: Prisma.SortOrder
+  planeId?: Prisma.SortOrder
 }
 
-export type FlightCreateNestedManyWithoutDepartureAirportInput = {
-  create?: Prisma.XOR<Prisma.FlightCreateWithoutDepartureAirportInput, Prisma.FlightUncheckedCreateWithoutDepartureAirportInput> | Prisma.FlightCreateWithoutDepartureAirportInput[] | Prisma.FlightUncheckedCreateWithoutDepartureAirportInput[]
-  connectOrCreate?: Prisma.FlightCreateOrConnectWithoutDepartureAirportInput | Prisma.FlightCreateOrConnectWithoutDepartureAirportInput[]
-  createMany?: Prisma.FlightCreateManyDepartureAirportInputEnvelope
+export type FlightCreateNestedManyWithoutOriginInput = {
+  create?: Prisma.XOR<Prisma.FlightCreateWithoutOriginInput, Prisma.FlightUncheckedCreateWithoutOriginInput> | Prisma.FlightCreateWithoutOriginInput[] | Prisma.FlightUncheckedCreateWithoutOriginInput[]
+  connectOrCreate?: Prisma.FlightCreateOrConnectWithoutOriginInput | Prisma.FlightCreateOrConnectWithoutOriginInput[]
+  createMany?: Prisma.FlightCreateManyOriginInputEnvelope
   connect?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
 }
 
-export type FlightCreateNestedManyWithoutArrivalAirportInput = {
-  create?: Prisma.XOR<Prisma.FlightCreateWithoutArrivalAirportInput, Prisma.FlightUncheckedCreateWithoutArrivalAirportInput> | Prisma.FlightCreateWithoutArrivalAirportInput[] | Prisma.FlightUncheckedCreateWithoutArrivalAirportInput[]
-  connectOrCreate?: Prisma.FlightCreateOrConnectWithoutArrivalAirportInput | Prisma.FlightCreateOrConnectWithoutArrivalAirportInput[]
-  createMany?: Prisma.FlightCreateManyArrivalAirportInputEnvelope
+export type FlightCreateNestedManyWithoutDestinationInput = {
+  create?: Prisma.XOR<Prisma.FlightCreateWithoutDestinationInput, Prisma.FlightUncheckedCreateWithoutDestinationInput> | Prisma.FlightCreateWithoutDestinationInput[] | Prisma.FlightUncheckedCreateWithoutDestinationInput[]
+  connectOrCreate?: Prisma.FlightCreateOrConnectWithoutDestinationInput | Prisma.FlightCreateOrConnectWithoutDestinationInput[]
+  createMany?: Prisma.FlightCreateManyDestinationInputEnvelope
   connect?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
 }
 
-export type FlightUncheckedCreateNestedManyWithoutDepartureAirportInput = {
-  create?: Prisma.XOR<Prisma.FlightCreateWithoutDepartureAirportInput, Prisma.FlightUncheckedCreateWithoutDepartureAirportInput> | Prisma.FlightCreateWithoutDepartureAirportInput[] | Prisma.FlightUncheckedCreateWithoutDepartureAirportInput[]
-  connectOrCreate?: Prisma.FlightCreateOrConnectWithoutDepartureAirportInput | Prisma.FlightCreateOrConnectWithoutDepartureAirportInput[]
-  createMany?: Prisma.FlightCreateManyDepartureAirportInputEnvelope
+export type FlightUncheckedCreateNestedManyWithoutOriginInput = {
+  create?: Prisma.XOR<Prisma.FlightCreateWithoutOriginInput, Prisma.FlightUncheckedCreateWithoutOriginInput> | Prisma.FlightCreateWithoutOriginInput[] | Prisma.FlightUncheckedCreateWithoutOriginInput[]
+  connectOrCreate?: Prisma.FlightCreateOrConnectWithoutOriginInput | Prisma.FlightCreateOrConnectWithoutOriginInput[]
+  createMany?: Prisma.FlightCreateManyOriginInputEnvelope
   connect?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
 }
 
-export type FlightUncheckedCreateNestedManyWithoutArrivalAirportInput = {
-  create?: Prisma.XOR<Prisma.FlightCreateWithoutArrivalAirportInput, Prisma.FlightUncheckedCreateWithoutArrivalAirportInput> | Prisma.FlightCreateWithoutArrivalAirportInput[] | Prisma.FlightUncheckedCreateWithoutArrivalAirportInput[]
-  connectOrCreate?: Prisma.FlightCreateOrConnectWithoutArrivalAirportInput | Prisma.FlightCreateOrConnectWithoutArrivalAirportInput[]
-  createMany?: Prisma.FlightCreateManyArrivalAirportInputEnvelope
+export type FlightUncheckedCreateNestedManyWithoutDestinationInput = {
+  create?: Prisma.XOR<Prisma.FlightCreateWithoutDestinationInput, Prisma.FlightUncheckedCreateWithoutDestinationInput> | Prisma.FlightCreateWithoutDestinationInput[] | Prisma.FlightUncheckedCreateWithoutDestinationInput[]
+  connectOrCreate?: Prisma.FlightCreateOrConnectWithoutDestinationInput | Prisma.FlightCreateOrConnectWithoutDestinationInput[]
+  createMany?: Prisma.FlightCreateManyDestinationInputEnvelope
   connect?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
 }
 
-export type FlightUpdateManyWithoutDepartureAirportNestedInput = {
-  create?: Prisma.XOR<Prisma.FlightCreateWithoutDepartureAirportInput, Prisma.FlightUncheckedCreateWithoutDepartureAirportInput> | Prisma.FlightCreateWithoutDepartureAirportInput[] | Prisma.FlightUncheckedCreateWithoutDepartureAirportInput[]
-  connectOrCreate?: Prisma.FlightCreateOrConnectWithoutDepartureAirportInput | Prisma.FlightCreateOrConnectWithoutDepartureAirportInput[]
-  upsert?: Prisma.FlightUpsertWithWhereUniqueWithoutDepartureAirportInput | Prisma.FlightUpsertWithWhereUniqueWithoutDepartureAirportInput[]
-  createMany?: Prisma.FlightCreateManyDepartureAirportInputEnvelope
+export type FlightUpdateManyWithoutOriginNestedInput = {
+  create?: Prisma.XOR<Prisma.FlightCreateWithoutOriginInput, Prisma.FlightUncheckedCreateWithoutOriginInput> | Prisma.FlightCreateWithoutOriginInput[] | Prisma.FlightUncheckedCreateWithoutOriginInput[]
+  connectOrCreate?: Prisma.FlightCreateOrConnectWithoutOriginInput | Prisma.FlightCreateOrConnectWithoutOriginInput[]
+  upsert?: Prisma.FlightUpsertWithWhereUniqueWithoutOriginInput | Prisma.FlightUpsertWithWhereUniqueWithoutOriginInput[]
+  createMany?: Prisma.FlightCreateManyOriginInputEnvelope
   set?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
   disconnect?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
   delete?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
   connect?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
-  update?: Prisma.FlightUpdateWithWhereUniqueWithoutDepartureAirportInput | Prisma.FlightUpdateWithWhereUniqueWithoutDepartureAirportInput[]
-  updateMany?: Prisma.FlightUpdateManyWithWhereWithoutDepartureAirportInput | Prisma.FlightUpdateManyWithWhereWithoutDepartureAirportInput[]
+  update?: Prisma.FlightUpdateWithWhereUniqueWithoutOriginInput | Prisma.FlightUpdateWithWhereUniqueWithoutOriginInput[]
+  updateMany?: Prisma.FlightUpdateManyWithWhereWithoutOriginInput | Prisma.FlightUpdateManyWithWhereWithoutOriginInput[]
   deleteMany?: Prisma.FlightScalarWhereInput | Prisma.FlightScalarWhereInput[]
 }
 
-export type FlightUpdateManyWithoutArrivalAirportNestedInput = {
-  create?: Prisma.XOR<Prisma.FlightCreateWithoutArrivalAirportInput, Prisma.FlightUncheckedCreateWithoutArrivalAirportInput> | Prisma.FlightCreateWithoutArrivalAirportInput[] | Prisma.FlightUncheckedCreateWithoutArrivalAirportInput[]
-  connectOrCreate?: Prisma.FlightCreateOrConnectWithoutArrivalAirportInput | Prisma.FlightCreateOrConnectWithoutArrivalAirportInput[]
-  upsert?: Prisma.FlightUpsertWithWhereUniqueWithoutArrivalAirportInput | Prisma.FlightUpsertWithWhereUniqueWithoutArrivalAirportInput[]
-  createMany?: Prisma.FlightCreateManyArrivalAirportInputEnvelope
+export type FlightUpdateManyWithoutDestinationNestedInput = {
+  create?: Prisma.XOR<Prisma.FlightCreateWithoutDestinationInput, Prisma.FlightUncheckedCreateWithoutDestinationInput> | Prisma.FlightCreateWithoutDestinationInput[] | Prisma.FlightUncheckedCreateWithoutDestinationInput[]
+  connectOrCreate?: Prisma.FlightCreateOrConnectWithoutDestinationInput | Prisma.FlightCreateOrConnectWithoutDestinationInput[]
+  upsert?: Prisma.FlightUpsertWithWhereUniqueWithoutDestinationInput | Prisma.FlightUpsertWithWhereUniqueWithoutDestinationInput[]
+  createMany?: Prisma.FlightCreateManyDestinationInputEnvelope
   set?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
   disconnect?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
   delete?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
   connect?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
-  update?: Prisma.FlightUpdateWithWhereUniqueWithoutArrivalAirportInput | Prisma.FlightUpdateWithWhereUniqueWithoutArrivalAirportInput[]
-  updateMany?: Prisma.FlightUpdateManyWithWhereWithoutArrivalAirportInput | Prisma.FlightUpdateManyWithWhereWithoutArrivalAirportInput[]
+  update?: Prisma.FlightUpdateWithWhereUniqueWithoutDestinationInput | Prisma.FlightUpdateWithWhereUniqueWithoutDestinationInput[]
+  updateMany?: Prisma.FlightUpdateManyWithWhereWithoutDestinationInput | Prisma.FlightUpdateManyWithWhereWithoutDestinationInput[]
   deleteMany?: Prisma.FlightScalarWhereInput | Prisma.FlightScalarWhereInput[]
 }
 
-export type FlightUncheckedUpdateManyWithoutDepartureAirportNestedInput = {
-  create?: Prisma.XOR<Prisma.FlightCreateWithoutDepartureAirportInput, Prisma.FlightUncheckedCreateWithoutDepartureAirportInput> | Prisma.FlightCreateWithoutDepartureAirportInput[] | Prisma.FlightUncheckedCreateWithoutDepartureAirportInput[]
-  connectOrCreate?: Prisma.FlightCreateOrConnectWithoutDepartureAirportInput | Prisma.FlightCreateOrConnectWithoutDepartureAirportInput[]
-  upsert?: Prisma.FlightUpsertWithWhereUniqueWithoutDepartureAirportInput | Prisma.FlightUpsertWithWhereUniqueWithoutDepartureAirportInput[]
-  createMany?: Prisma.FlightCreateManyDepartureAirportInputEnvelope
+export type FlightUncheckedUpdateManyWithoutOriginNestedInput = {
+  create?: Prisma.XOR<Prisma.FlightCreateWithoutOriginInput, Prisma.FlightUncheckedCreateWithoutOriginInput> | Prisma.FlightCreateWithoutOriginInput[] | Prisma.FlightUncheckedCreateWithoutOriginInput[]
+  connectOrCreate?: Prisma.FlightCreateOrConnectWithoutOriginInput | Prisma.FlightCreateOrConnectWithoutOriginInput[]
+  upsert?: Prisma.FlightUpsertWithWhereUniqueWithoutOriginInput | Prisma.FlightUpsertWithWhereUniqueWithoutOriginInput[]
+  createMany?: Prisma.FlightCreateManyOriginInputEnvelope
   set?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
   disconnect?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
   delete?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
   connect?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
-  update?: Prisma.FlightUpdateWithWhereUniqueWithoutDepartureAirportInput | Prisma.FlightUpdateWithWhereUniqueWithoutDepartureAirportInput[]
-  updateMany?: Prisma.FlightUpdateManyWithWhereWithoutDepartureAirportInput | Prisma.FlightUpdateManyWithWhereWithoutDepartureAirportInput[]
+  update?: Prisma.FlightUpdateWithWhereUniqueWithoutOriginInput | Prisma.FlightUpdateWithWhereUniqueWithoutOriginInput[]
+  updateMany?: Prisma.FlightUpdateManyWithWhereWithoutOriginInput | Prisma.FlightUpdateManyWithWhereWithoutOriginInput[]
   deleteMany?: Prisma.FlightScalarWhereInput | Prisma.FlightScalarWhereInput[]
 }
 
-export type FlightUncheckedUpdateManyWithoutArrivalAirportNestedInput = {
-  create?: Prisma.XOR<Prisma.FlightCreateWithoutArrivalAirportInput, Prisma.FlightUncheckedCreateWithoutArrivalAirportInput> | Prisma.FlightCreateWithoutArrivalAirportInput[] | Prisma.FlightUncheckedCreateWithoutArrivalAirportInput[]
-  connectOrCreate?: Prisma.FlightCreateOrConnectWithoutArrivalAirportInput | Prisma.FlightCreateOrConnectWithoutArrivalAirportInput[]
-  upsert?: Prisma.FlightUpsertWithWhereUniqueWithoutArrivalAirportInput | Prisma.FlightUpsertWithWhereUniqueWithoutArrivalAirportInput[]
-  createMany?: Prisma.FlightCreateManyArrivalAirportInputEnvelope
+export type FlightUncheckedUpdateManyWithoutDestinationNestedInput = {
+  create?: Prisma.XOR<Prisma.FlightCreateWithoutDestinationInput, Prisma.FlightUncheckedCreateWithoutDestinationInput> | Prisma.FlightCreateWithoutDestinationInput[] | Prisma.FlightUncheckedCreateWithoutDestinationInput[]
+  connectOrCreate?: Prisma.FlightCreateOrConnectWithoutDestinationInput | Prisma.FlightCreateOrConnectWithoutDestinationInput[]
+  upsert?: Prisma.FlightUpsertWithWhereUniqueWithoutDestinationInput | Prisma.FlightUpsertWithWhereUniqueWithoutDestinationInput[]
+  createMany?: Prisma.FlightCreateManyDestinationInputEnvelope
   set?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
   disconnect?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
   delete?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
   connect?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
-  update?: Prisma.FlightUpdateWithWhereUniqueWithoutArrivalAirportInput | Prisma.FlightUpdateWithWhereUniqueWithoutArrivalAirportInput[]
-  updateMany?: Prisma.FlightUpdateManyWithWhereWithoutArrivalAirportInput | Prisma.FlightUpdateManyWithWhereWithoutArrivalAirportInput[]
-  deleteMany?: Prisma.FlightScalarWhereInput | Prisma.FlightScalarWhereInput[]
-}
-
-export type FlightCreateNestedManyWithoutAirplaneInput = {
-  create?: Prisma.XOR<Prisma.FlightCreateWithoutAirplaneInput, Prisma.FlightUncheckedCreateWithoutAirplaneInput> | Prisma.FlightCreateWithoutAirplaneInput[] | Prisma.FlightUncheckedCreateWithoutAirplaneInput[]
-  connectOrCreate?: Prisma.FlightCreateOrConnectWithoutAirplaneInput | Prisma.FlightCreateOrConnectWithoutAirplaneInput[]
-  createMany?: Prisma.FlightCreateManyAirplaneInputEnvelope
-  connect?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
-}
-
-export type FlightUncheckedCreateNestedManyWithoutAirplaneInput = {
-  create?: Prisma.XOR<Prisma.FlightCreateWithoutAirplaneInput, Prisma.FlightUncheckedCreateWithoutAirplaneInput> | Prisma.FlightCreateWithoutAirplaneInput[] | Prisma.FlightUncheckedCreateWithoutAirplaneInput[]
-  connectOrCreate?: Prisma.FlightCreateOrConnectWithoutAirplaneInput | Prisma.FlightCreateOrConnectWithoutAirplaneInput[]
-  createMany?: Prisma.FlightCreateManyAirplaneInputEnvelope
-  connect?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
-}
-
-export type FlightUpdateManyWithoutAirplaneNestedInput = {
-  create?: Prisma.XOR<Prisma.FlightCreateWithoutAirplaneInput, Prisma.FlightUncheckedCreateWithoutAirplaneInput> | Prisma.FlightCreateWithoutAirplaneInput[] | Prisma.FlightUncheckedCreateWithoutAirplaneInput[]
-  connectOrCreate?: Prisma.FlightCreateOrConnectWithoutAirplaneInput | Prisma.FlightCreateOrConnectWithoutAirplaneInput[]
-  upsert?: Prisma.FlightUpsertWithWhereUniqueWithoutAirplaneInput | Prisma.FlightUpsertWithWhereUniqueWithoutAirplaneInput[]
-  createMany?: Prisma.FlightCreateManyAirplaneInputEnvelope
-  set?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
-  disconnect?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
-  delete?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
-  connect?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
-  update?: Prisma.FlightUpdateWithWhereUniqueWithoutAirplaneInput | Prisma.FlightUpdateWithWhereUniqueWithoutAirplaneInput[]
-  updateMany?: Prisma.FlightUpdateManyWithWhereWithoutAirplaneInput | Prisma.FlightUpdateManyWithWhereWithoutAirplaneInput[]
-  deleteMany?: Prisma.FlightScalarWhereInput | Prisma.FlightScalarWhereInput[]
-}
-
-export type FlightUncheckedUpdateManyWithoutAirplaneNestedInput = {
-  create?: Prisma.XOR<Prisma.FlightCreateWithoutAirplaneInput, Prisma.FlightUncheckedCreateWithoutAirplaneInput> | Prisma.FlightCreateWithoutAirplaneInput[] | Prisma.FlightUncheckedCreateWithoutAirplaneInput[]
-  connectOrCreate?: Prisma.FlightCreateOrConnectWithoutAirplaneInput | Prisma.FlightCreateOrConnectWithoutAirplaneInput[]
-  upsert?: Prisma.FlightUpsertWithWhereUniqueWithoutAirplaneInput | Prisma.FlightUpsertWithWhereUniqueWithoutAirplaneInput[]
-  createMany?: Prisma.FlightCreateManyAirplaneInputEnvelope
-  set?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
-  disconnect?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
-  delete?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
-  connect?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
-  update?: Prisma.FlightUpdateWithWhereUniqueWithoutAirplaneInput | Prisma.FlightUpdateWithWhereUniqueWithoutAirplaneInput[]
-  updateMany?: Prisma.FlightUpdateManyWithWhereWithoutAirplaneInput | Prisma.FlightUpdateManyWithWhereWithoutAirplaneInput[]
+  update?: Prisma.FlightUpdateWithWhereUniqueWithoutDestinationInput | Prisma.FlightUpdateWithWhereUniqueWithoutDestinationInput[]
+  updateMany?: Prisma.FlightUpdateManyWithWhereWithoutDestinationInput | Prisma.FlightUpdateManyWithWhereWithoutDestinationInput[]
   deleteMany?: Prisma.FlightScalarWhereInput | Prisma.FlightScalarWhereInput[]
 }
 
@@ -494,74 +459,158 @@ export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
 }
 
-export type FlightCreateWithoutDepartureAirportInput = {
+export type FlightCreateNestedManyWithoutPassengersInput = {
+  create?: Prisma.XOR<Prisma.FlightCreateWithoutPassengersInput, Prisma.FlightUncheckedCreateWithoutPassengersInput> | Prisma.FlightCreateWithoutPassengersInput[] | Prisma.FlightUncheckedCreateWithoutPassengersInput[]
+  connectOrCreate?: Prisma.FlightCreateOrConnectWithoutPassengersInput | Prisma.FlightCreateOrConnectWithoutPassengersInput[]
+  connect?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
+}
+
+export type FlightUncheckedCreateNestedManyWithoutPassengersInput = {
+  create?: Prisma.XOR<Prisma.FlightCreateWithoutPassengersInput, Prisma.FlightUncheckedCreateWithoutPassengersInput> | Prisma.FlightCreateWithoutPassengersInput[] | Prisma.FlightUncheckedCreateWithoutPassengersInput[]
+  connectOrCreate?: Prisma.FlightCreateOrConnectWithoutPassengersInput | Prisma.FlightCreateOrConnectWithoutPassengersInput[]
+  connect?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
+}
+
+export type FlightUpdateManyWithoutPassengersNestedInput = {
+  create?: Prisma.XOR<Prisma.FlightCreateWithoutPassengersInput, Prisma.FlightUncheckedCreateWithoutPassengersInput> | Prisma.FlightCreateWithoutPassengersInput[] | Prisma.FlightUncheckedCreateWithoutPassengersInput[]
+  connectOrCreate?: Prisma.FlightCreateOrConnectWithoutPassengersInput | Prisma.FlightCreateOrConnectWithoutPassengersInput[]
+  upsert?: Prisma.FlightUpsertWithWhereUniqueWithoutPassengersInput | Prisma.FlightUpsertWithWhereUniqueWithoutPassengersInput[]
+  set?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
+  disconnect?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
+  delete?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
+  connect?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
+  update?: Prisma.FlightUpdateWithWhereUniqueWithoutPassengersInput | Prisma.FlightUpdateWithWhereUniqueWithoutPassengersInput[]
+  updateMany?: Prisma.FlightUpdateManyWithWhereWithoutPassengersInput | Prisma.FlightUpdateManyWithWhereWithoutPassengersInput[]
+  deleteMany?: Prisma.FlightScalarWhereInput | Prisma.FlightScalarWhereInput[]
+}
+
+export type FlightUncheckedUpdateManyWithoutPassengersNestedInput = {
+  create?: Prisma.XOR<Prisma.FlightCreateWithoutPassengersInput, Prisma.FlightUncheckedCreateWithoutPassengersInput> | Prisma.FlightCreateWithoutPassengersInput[] | Prisma.FlightUncheckedCreateWithoutPassengersInput[]
+  connectOrCreate?: Prisma.FlightCreateOrConnectWithoutPassengersInput | Prisma.FlightCreateOrConnectWithoutPassengersInput[]
+  upsert?: Prisma.FlightUpsertWithWhereUniqueWithoutPassengersInput | Prisma.FlightUpsertWithWhereUniqueWithoutPassengersInput[]
+  set?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
+  disconnect?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
+  delete?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
+  connect?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
+  update?: Prisma.FlightUpdateWithWhereUniqueWithoutPassengersInput | Prisma.FlightUpdateWithWhereUniqueWithoutPassengersInput[]
+  updateMany?: Prisma.FlightUpdateManyWithWhereWithoutPassengersInput | Prisma.FlightUpdateManyWithWhereWithoutPassengersInput[]
+  deleteMany?: Prisma.FlightScalarWhereInput | Prisma.FlightScalarWhereInput[]
+}
+
+export type FlightCreateNestedManyWithoutPlaneInput = {
+  create?: Prisma.XOR<Prisma.FlightCreateWithoutPlaneInput, Prisma.FlightUncheckedCreateWithoutPlaneInput> | Prisma.FlightCreateWithoutPlaneInput[] | Prisma.FlightUncheckedCreateWithoutPlaneInput[]
+  connectOrCreate?: Prisma.FlightCreateOrConnectWithoutPlaneInput | Prisma.FlightCreateOrConnectWithoutPlaneInput[]
+  createMany?: Prisma.FlightCreateManyPlaneInputEnvelope
+  connect?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
+}
+
+export type FlightUncheckedCreateNestedManyWithoutPlaneInput = {
+  create?: Prisma.XOR<Prisma.FlightCreateWithoutPlaneInput, Prisma.FlightUncheckedCreateWithoutPlaneInput> | Prisma.FlightCreateWithoutPlaneInput[] | Prisma.FlightUncheckedCreateWithoutPlaneInput[]
+  connectOrCreate?: Prisma.FlightCreateOrConnectWithoutPlaneInput | Prisma.FlightCreateOrConnectWithoutPlaneInput[]
+  createMany?: Prisma.FlightCreateManyPlaneInputEnvelope
+  connect?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
+}
+
+export type FlightUpdateManyWithoutPlaneNestedInput = {
+  create?: Prisma.XOR<Prisma.FlightCreateWithoutPlaneInput, Prisma.FlightUncheckedCreateWithoutPlaneInput> | Prisma.FlightCreateWithoutPlaneInput[] | Prisma.FlightUncheckedCreateWithoutPlaneInput[]
+  connectOrCreate?: Prisma.FlightCreateOrConnectWithoutPlaneInput | Prisma.FlightCreateOrConnectWithoutPlaneInput[]
+  upsert?: Prisma.FlightUpsertWithWhereUniqueWithoutPlaneInput | Prisma.FlightUpsertWithWhereUniqueWithoutPlaneInput[]
+  createMany?: Prisma.FlightCreateManyPlaneInputEnvelope
+  set?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
+  disconnect?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
+  delete?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
+  connect?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
+  update?: Prisma.FlightUpdateWithWhereUniqueWithoutPlaneInput | Prisma.FlightUpdateWithWhereUniqueWithoutPlaneInput[]
+  updateMany?: Prisma.FlightUpdateManyWithWhereWithoutPlaneInput | Prisma.FlightUpdateManyWithWhereWithoutPlaneInput[]
+  deleteMany?: Prisma.FlightScalarWhereInput | Prisma.FlightScalarWhereInput[]
+}
+
+export type FlightUncheckedUpdateManyWithoutPlaneNestedInput = {
+  create?: Prisma.XOR<Prisma.FlightCreateWithoutPlaneInput, Prisma.FlightUncheckedCreateWithoutPlaneInput> | Prisma.FlightCreateWithoutPlaneInput[] | Prisma.FlightUncheckedCreateWithoutPlaneInput[]
+  connectOrCreate?: Prisma.FlightCreateOrConnectWithoutPlaneInput | Prisma.FlightCreateOrConnectWithoutPlaneInput[]
+  upsert?: Prisma.FlightUpsertWithWhereUniqueWithoutPlaneInput | Prisma.FlightUpsertWithWhereUniqueWithoutPlaneInput[]
+  createMany?: Prisma.FlightCreateManyPlaneInputEnvelope
+  set?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
+  disconnect?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
+  delete?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
+  connect?: Prisma.FlightWhereUniqueInput | Prisma.FlightWhereUniqueInput[]
+  update?: Prisma.FlightUpdateWithWhereUniqueWithoutPlaneInput | Prisma.FlightUpdateWithWhereUniqueWithoutPlaneInput[]
+  updateMany?: Prisma.FlightUpdateManyWithWhereWithoutPlaneInput | Prisma.FlightUpdateManyWithWhereWithoutPlaneInput[]
+  deleteMany?: Prisma.FlightScalarWhereInput | Prisma.FlightScalarWhereInput[]
+}
+
+export type FlightCreateWithoutOriginInput = {
   id?: string
   flightNumber: string
   departureTime: Date | string
   arrivalTime: Date | string
-  airplane: Prisma.AirplaneCreateNestedOneWithoutFlightsInput
-  arrivalAirport: Prisma.AirportCreateNestedOneWithoutArrivalFlightsInput
+  passengers?: Prisma.PassengerCreateNestedManyWithoutFlightsInput
+  destination: Prisma.AirportCreateNestedOneWithoutArrivingFlightsInput
+  plane: Prisma.PlaneCreateNestedOneWithoutFlightsInput
 }
 
-export type FlightUncheckedCreateWithoutDepartureAirportInput = {
+export type FlightUncheckedCreateWithoutOriginInput = {
   id?: string
   flightNumber: string
   departureTime: Date | string
   arrivalTime: Date | string
-  airplaneId: string
-  arrivalAirportId: string
+  destinationId: string
+  planeId: string
+  passengers?: Prisma.PassengerUncheckedCreateNestedManyWithoutFlightsInput
 }
 
-export type FlightCreateOrConnectWithoutDepartureAirportInput = {
+export type FlightCreateOrConnectWithoutOriginInput = {
   where: Prisma.FlightWhereUniqueInput
-  create: Prisma.XOR<Prisma.FlightCreateWithoutDepartureAirportInput, Prisma.FlightUncheckedCreateWithoutDepartureAirportInput>
+  create: Prisma.XOR<Prisma.FlightCreateWithoutOriginInput, Prisma.FlightUncheckedCreateWithoutOriginInput>
 }
 
-export type FlightCreateManyDepartureAirportInputEnvelope = {
-  data: Prisma.FlightCreateManyDepartureAirportInput | Prisma.FlightCreateManyDepartureAirportInput[]
+export type FlightCreateManyOriginInputEnvelope = {
+  data: Prisma.FlightCreateManyOriginInput | Prisma.FlightCreateManyOriginInput[]
 }
 
-export type FlightCreateWithoutArrivalAirportInput = {
+export type FlightCreateWithoutDestinationInput = {
   id?: string
   flightNumber: string
   departureTime: Date | string
   arrivalTime: Date | string
-  airplane: Prisma.AirplaneCreateNestedOneWithoutFlightsInput
-  departureAirport: Prisma.AirportCreateNestedOneWithoutDepartureFlightsInput
+  passengers?: Prisma.PassengerCreateNestedManyWithoutFlightsInput
+  origin: Prisma.AirportCreateNestedOneWithoutDepartingFlightsInput
+  plane: Prisma.PlaneCreateNestedOneWithoutFlightsInput
 }
 
-export type FlightUncheckedCreateWithoutArrivalAirportInput = {
+export type FlightUncheckedCreateWithoutDestinationInput = {
   id?: string
   flightNumber: string
   departureTime: Date | string
   arrivalTime: Date | string
-  airplaneId: string
-  departureAirportId: string
+  originId: string
+  planeId: string
+  passengers?: Prisma.PassengerUncheckedCreateNestedManyWithoutFlightsInput
 }
 
-export type FlightCreateOrConnectWithoutArrivalAirportInput = {
+export type FlightCreateOrConnectWithoutDestinationInput = {
   where: Prisma.FlightWhereUniqueInput
-  create: Prisma.XOR<Prisma.FlightCreateWithoutArrivalAirportInput, Prisma.FlightUncheckedCreateWithoutArrivalAirportInput>
+  create: Prisma.XOR<Prisma.FlightCreateWithoutDestinationInput, Prisma.FlightUncheckedCreateWithoutDestinationInput>
 }
 
-export type FlightCreateManyArrivalAirportInputEnvelope = {
-  data: Prisma.FlightCreateManyArrivalAirportInput | Prisma.FlightCreateManyArrivalAirportInput[]
+export type FlightCreateManyDestinationInputEnvelope = {
+  data: Prisma.FlightCreateManyDestinationInput | Prisma.FlightCreateManyDestinationInput[]
 }
 
-export type FlightUpsertWithWhereUniqueWithoutDepartureAirportInput = {
+export type FlightUpsertWithWhereUniqueWithoutOriginInput = {
   where: Prisma.FlightWhereUniqueInput
-  update: Prisma.XOR<Prisma.FlightUpdateWithoutDepartureAirportInput, Prisma.FlightUncheckedUpdateWithoutDepartureAirportInput>
-  create: Prisma.XOR<Prisma.FlightCreateWithoutDepartureAirportInput, Prisma.FlightUncheckedCreateWithoutDepartureAirportInput>
+  update: Prisma.XOR<Prisma.FlightUpdateWithoutOriginInput, Prisma.FlightUncheckedUpdateWithoutOriginInput>
+  create: Prisma.XOR<Prisma.FlightCreateWithoutOriginInput, Prisma.FlightUncheckedCreateWithoutOriginInput>
 }
 
-export type FlightUpdateWithWhereUniqueWithoutDepartureAirportInput = {
+export type FlightUpdateWithWhereUniqueWithoutOriginInput = {
   where: Prisma.FlightWhereUniqueInput
-  data: Prisma.XOR<Prisma.FlightUpdateWithoutDepartureAirportInput, Prisma.FlightUncheckedUpdateWithoutDepartureAirportInput>
+  data: Prisma.XOR<Prisma.FlightUpdateWithoutOriginInput, Prisma.FlightUncheckedUpdateWithoutOriginInput>
 }
 
-export type FlightUpdateManyWithWhereWithoutDepartureAirportInput = {
+export type FlightUpdateManyWithWhereWithoutOriginInput = {
   where: Prisma.FlightScalarWhereInput
-  data: Prisma.XOR<Prisma.FlightUpdateManyMutationInput, Prisma.FlightUncheckedUpdateManyWithoutDepartureAirportInput>
+  data: Prisma.XOR<Prisma.FlightUpdateManyMutationInput, Prisma.FlightUncheckedUpdateManyWithoutOriginInput>
 }
 
 export type FlightScalarWhereInput = {
@@ -572,178 +621,286 @@ export type FlightScalarWhereInput = {
   flightNumber?: Prisma.StringFilter<"Flight"> | string
   departureTime?: Prisma.DateTimeFilter<"Flight"> | Date | string
   arrivalTime?: Prisma.DateTimeFilter<"Flight"> | Date | string
-  airplaneId?: Prisma.StringFilter<"Flight"> | string
-  departureAirportId?: Prisma.StringFilter<"Flight"> | string
-  arrivalAirportId?: Prisma.StringFilter<"Flight"> | string
+  originId?: Prisma.StringFilter<"Flight"> | string
+  destinationId?: Prisma.StringFilter<"Flight"> | string
+  planeId?: Prisma.StringFilter<"Flight"> | string
 }
 
-export type FlightUpsertWithWhereUniqueWithoutArrivalAirportInput = {
+export type FlightUpsertWithWhereUniqueWithoutDestinationInput = {
   where: Prisma.FlightWhereUniqueInput
-  update: Prisma.XOR<Prisma.FlightUpdateWithoutArrivalAirportInput, Prisma.FlightUncheckedUpdateWithoutArrivalAirportInput>
-  create: Prisma.XOR<Prisma.FlightCreateWithoutArrivalAirportInput, Prisma.FlightUncheckedCreateWithoutArrivalAirportInput>
+  update: Prisma.XOR<Prisma.FlightUpdateWithoutDestinationInput, Prisma.FlightUncheckedUpdateWithoutDestinationInput>
+  create: Prisma.XOR<Prisma.FlightCreateWithoutDestinationInput, Prisma.FlightUncheckedCreateWithoutDestinationInput>
 }
 
-export type FlightUpdateWithWhereUniqueWithoutArrivalAirportInput = {
+export type FlightUpdateWithWhereUniqueWithoutDestinationInput = {
   where: Prisma.FlightWhereUniqueInput
-  data: Prisma.XOR<Prisma.FlightUpdateWithoutArrivalAirportInput, Prisma.FlightUncheckedUpdateWithoutArrivalAirportInput>
+  data: Prisma.XOR<Prisma.FlightUpdateWithoutDestinationInput, Prisma.FlightUncheckedUpdateWithoutDestinationInput>
 }
 
-export type FlightUpdateManyWithWhereWithoutArrivalAirportInput = {
+export type FlightUpdateManyWithWhereWithoutDestinationInput = {
   where: Prisma.FlightScalarWhereInput
-  data: Prisma.XOR<Prisma.FlightUpdateManyMutationInput, Prisma.FlightUncheckedUpdateManyWithoutArrivalAirportInput>
+  data: Prisma.XOR<Prisma.FlightUpdateManyMutationInput, Prisma.FlightUncheckedUpdateManyWithoutDestinationInput>
 }
 
-export type FlightCreateWithoutAirplaneInput = {
+export type FlightCreateWithoutPassengersInput = {
   id?: string
   flightNumber: string
   departureTime: Date | string
   arrivalTime: Date | string
-  departureAirport: Prisma.AirportCreateNestedOneWithoutDepartureFlightsInput
-  arrivalAirport: Prisma.AirportCreateNestedOneWithoutArrivalFlightsInput
+  origin: Prisma.AirportCreateNestedOneWithoutDepartingFlightsInput
+  destination: Prisma.AirportCreateNestedOneWithoutArrivingFlightsInput
+  plane: Prisma.PlaneCreateNestedOneWithoutFlightsInput
 }
 
-export type FlightUncheckedCreateWithoutAirplaneInput = {
+export type FlightUncheckedCreateWithoutPassengersInput = {
   id?: string
   flightNumber: string
   departureTime: Date | string
   arrivalTime: Date | string
-  departureAirportId: string
-  arrivalAirportId: string
+  originId: string
+  destinationId: string
+  planeId: string
 }
 
-export type FlightCreateOrConnectWithoutAirplaneInput = {
+export type FlightCreateOrConnectWithoutPassengersInput = {
   where: Prisma.FlightWhereUniqueInput
-  create: Prisma.XOR<Prisma.FlightCreateWithoutAirplaneInput, Prisma.FlightUncheckedCreateWithoutAirplaneInput>
+  create: Prisma.XOR<Prisma.FlightCreateWithoutPassengersInput, Prisma.FlightUncheckedCreateWithoutPassengersInput>
 }
 
-export type FlightCreateManyAirplaneInputEnvelope = {
-  data: Prisma.FlightCreateManyAirplaneInput | Prisma.FlightCreateManyAirplaneInput[]
-}
-
-export type FlightUpsertWithWhereUniqueWithoutAirplaneInput = {
+export type FlightUpsertWithWhereUniqueWithoutPassengersInput = {
   where: Prisma.FlightWhereUniqueInput
-  update: Prisma.XOR<Prisma.FlightUpdateWithoutAirplaneInput, Prisma.FlightUncheckedUpdateWithoutAirplaneInput>
-  create: Prisma.XOR<Prisma.FlightCreateWithoutAirplaneInput, Prisma.FlightUncheckedCreateWithoutAirplaneInput>
+  update: Prisma.XOR<Prisma.FlightUpdateWithoutPassengersInput, Prisma.FlightUncheckedUpdateWithoutPassengersInput>
+  create: Prisma.XOR<Prisma.FlightCreateWithoutPassengersInput, Prisma.FlightUncheckedCreateWithoutPassengersInput>
 }
 
-export type FlightUpdateWithWhereUniqueWithoutAirplaneInput = {
+export type FlightUpdateWithWhereUniqueWithoutPassengersInput = {
   where: Prisma.FlightWhereUniqueInput
-  data: Prisma.XOR<Prisma.FlightUpdateWithoutAirplaneInput, Prisma.FlightUncheckedUpdateWithoutAirplaneInput>
+  data: Prisma.XOR<Prisma.FlightUpdateWithoutPassengersInput, Prisma.FlightUncheckedUpdateWithoutPassengersInput>
 }
 
-export type FlightUpdateManyWithWhereWithoutAirplaneInput = {
+export type FlightUpdateManyWithWhereWithoutPassengersInput = {
   where: Prisma.FlightScalarWhereInput
-  data: Prisma.XOR<Prisma.FlightUpdateManyMutationInput, Prisma.FlightUncheckedUpdateManyWithoutAirplaneInput>
+  data: Prisma.XOR<Prisma.FlightUpdateManyMutationInput, Prisma.FlightUncheckedUpdateManyWithoutPassengersInput>
 }
 
-export type FlightCreateManyDepartureAirportInput = {
+export type FlightCreateWithoutPlaneInput = {
   id?: string
   flightNumber: string
   departureTime: Date | string
   arrivalTime: Date | string
-  airplaneId: string
-  arrivalAirportId: string
+  passengers?: Prisma.PassengerCreateNestedManyWithoutFlightsInput
+  origin: Prisma.AirportCreateNestedOneWithoutDepartingFlightsInput
+  destination: Prisma.AirportCreateNestedOneWithoutArrivingFlightsInput
 }
 
-export type FlightCreateManyArrivalAirportInput = {
+export type FlightUncheckedCreateWithoutPlaneInput = {
   id?: string
   flightNumber: string
   departureTime: Date | string
   arrivalTime: Date | string
-  airplaneId: string
-  departureAirportId: string
+  originId: string
+  destinationId: string
+  passengers?: Prisma.PassengerUncheckedCreateNestedManyWithoutFlightsInput
 }
 
-export type FlightUpdateWithoutDepartureAirportInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  flightNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  departureTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  arrivalTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  airplane?: Prisma.AirplaneUpdateOneRequiredWithoutFlightsNestedInput
-  arrivalAirport?: Prisma.AirportUpdateOneRequiredWithoutArrivalFlightsNestedInput
+export type FlightCreateOrConnectWithoutPlaneInput = {
+  where: Prisma.FlightWhereUniqueInput
+  create: Prisma.XOR<Prisma.FlightCreateWithoutPlaneInput, Prisma.FlightUncheckedCreateWithoutPlaneInput>
 }
 
-export type FlightUncheckedUpdateWithoutDepartureAirportInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  flightNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  departureTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  arrivalTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  airplaneId?: Prisma.StringFieldUpdateOperationsInput | string
-  arrivalAirportId?: Prisma.StringFieldUpdateOperationsInput | string
+export type FlightCreateManyPlaneInputEnvelope = {
+  data: Prisma.FlightCreateManyPlaneInput | Prisma.FlightCreateManyPlaneInput[]
 }
 
-export type FlightUncheckedUpdateManyWithoutDepartureAirportInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  flightNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  departureTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  arrivalTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  airplaneId?: Prisma.StringFieldUpdateOperationsInput | string
-  arrivalAirportId?: Prisma.StringFieldUpdateOperationsInput | string
+export type FlightUpsertWithWhereUniqueWithoutPlaneInput = {
+  where: Prisma.FlightWhereUniqueInput
+  update: Prisma.XOR<Prisma.FlightUpdateWithoutPlaneInput, Prisma.FlightUncheckedUpdateWithoutPlaneInput>
+  create: Prisma.XOR<Prisma.FlightCreateWithoutPlaneInput, Prisma.FlightUncheckedCreateWithoutPlaneInput>
 }
 
-export type FlightUpdateWithoutArrivalAirportInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  flightNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  departureTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  arrivalTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  airplane?: Prisma.AirplaneUpdateOneRequiredWithoutFlightsNestedInput
-  departureAirport?: Prisma.AirportUpdateOneRequiredWithoutDepartureFlightsNestedInput
+export type FlightUpdateWithWhereUniqueWithoutPlaneInput = {
+  where: Prisma.FlightWhereUniqueInput
+  data: Prisma.XOR<Prisma.FlightUpdateWithoutPlaneInput, Prisma.FlightUncheckedUpdateWithoutPlaneInput>
 }
 
-export type FlightUncheckedUpdateWithoutArrivalAirportInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  flightNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  departureTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  arrivalTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  airplaneId?: Prisma.StringFieldUpdateOperationsInput | string
-  departureAirportId?: Prisma.StringFieldUpdateOperationsInput | string
+export type FlightUpdateManyWithWhereWithoutPlaneInput = {
+  where: Prisma.FlightScalarWhereInput
+  data: Prisma.XOR<Prisma.FlightUpdateManyMutationInput, Prisma.FlightUncheckedUpdateManyWithoutPlaneInput>
 }
 
-export type FlightUncheckedUpdateManyWithoutArrivalAirportInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  flightNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  departureTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  arrivalTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  airplaneId?: Prisma.StringFieldUpdateOperationsInput | string
-  departureAirportId?: Prisma.StringFieldUpdateOperationsInput | string
-}
-
-export type FlightCreateManyAirplaneInput = {
+export type FlightCreateManyOriginInput = {
   id?: string
   flightNumber: string
   departureTime: Date | string
   arrivalTime: Date | string
-  departureAirportId: string
-  arrivalAirportId: string
+  destinationId: string
+  planeId: string
 }
 
-export type FlightUpdateWithoutAirplaneInput = {
+export type FlightCreateManyDestinationInput = {
+  id?: string
+  flightNumber: string
+  departureTime: Date | string
+  arrivalTime: Date | string
+  originId: string
+  planeId: string
+}
+
+export type FlightUpdateWithoutOriginInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   flightNumber?: Prisma.StringFieldUpdateOperationsInput | string
   departureTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   arrivalTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  departureAirport?: Prisma.AirportUpdateOneRequiredWithoutDepartureFlightsNestedInput
-  arrivalAirport?: Prisma.AirportUpdateOneRequiredWithoutArrivalFlightsNestedInput
+  passengers?: Prisma.PassengerUpdateManyWithoutFlightsNestedInput
+  destination?: Prisma.AirportUpdateOneRequiredWithoutArrivingFlightsNestedInput
+  plane?: Prisma.PlaneUpdateOneRequiredWithoutFlightsNestedInput
 }
 
-export type FlightUncheckedUpdateWithoutAirplaneInput = {
+export type FlightUncheckedUpdateWithoutOriginInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   flightNumber?: Prisma.StringFieldUpdateOperationsInput | string
   departureTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   arrivalTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  departureAirportId?: Prisma.StringFieldUpdateOperationsInput | string
-  arrivalAirportId?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationId?: Prisma.StringFieldUpdateOperationsInput | string
+  planeId?: Prisma.StringFieldUpdateOperationsInput | string
+  passengers?: Prisma.PassengerUncheckedUpdateManyWithoutFlightsNestedInput
 }
 
-export type FlightUncheckedUpdateManyWithoutAirplaneInput = {
+export type FlightUncheckedUpdateManyWithoutOriginInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   flightNumber?: Prisma.StringFieldUpdateOperationsInput | string
   departureTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   arrivalTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  departureAirportId?: Prisma.StringFieldUpdateOperationsInput | string
-  arrivalAirportId?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationId?: Prisma.StringFieldUpdateOperationsInput | string
+  planeId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
+export type FlightUpdateWithoutDestinationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  flightNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  departureTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  arrivalTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  passengers?: Prisma.PassengerUpdateManyWithoutFlightsNestedInput
+  origin?: Prisma.AirportUpdateOneRequiredWithoutDepartingFlightsNestedInput
+  plane?: Prisma.PlaneUpdateOneRequiredWithoutFlightsNestedInput
+}
+
+export type FlightUncheckedUpdateWithoutDestinationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  flightNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  departureTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  arrivalTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  originId?: Prisma.StringFieldUpdateOperationsInput | string
+  planeId?: Prisma.StringFieldUpdateOperationsInput | string
+  passengers?: Prisma.PassengerUncheckedUpdateManyWithoutFlightsNestedInput
+}
+
+export type FlightUncheckedUpdateManyWithoutDestinationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  flightNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  departureTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  arrivalTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  originId?: Prisma.StringFieldUpdateOperationsInput | string
+  planeId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type FlightUpdateWithoutPassengersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  flightNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  departureTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  arrivalTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  origin?: Prisma.AirportUpdateOneRequiredWithoutDepartingFlightsNestedInput
+  destination?: Prisma.AirportUpdateOneRequiredWithoutArrivingFlightsNestedInput
+  plane?: Prisma.PlaneUpdateOneRequiredWithoutFlightsNestedInput
+}
+
+export type FlightUncheckedUpdateWithoutPassengersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  flightNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  departureTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  arrivalTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  originId?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationId?: Prisma.StringFieldUpdateOperationsInput | string
+  planeId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type FlightUncheckedUpdateManyWithoutPassengersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  flightNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  departureTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  arrivalTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  originId?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationId?: Prisma.StringFieldUpdateOperationsInput | string
+  planeId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type FlightCreateManyPlaneInput = {
+  id?: string
+  flightNumber: string
+  departureTime: Date | string
+  arrivalTime: Date | string
+  originId: string
+  destinationId: string
+}
+
+export type FlightUpdateWithoutPlaneInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  flightNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  departureTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  arrivalTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  passengers?: Prisma.PassengerUpdateManyWithoutFlightsNestedInput
+  origin?: Prisma.AirportUpdateOneRequiredWithoutDepartingFlightsNestedInput
+  destination?: Prisma.AirportUpdateOneRequiredWithoutArrivingFlightsNestedInput
+}
+
+export type FlightUncheckedUpdateWithoutPlaneInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  flightNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  departureTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  arrivalTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  originId?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationId?: Prisma.StringFieldUpdateOperationsInput | string
+  passengers?: Prisma.PassengerUncheckedUpdateManyWithoutFlightsNestedInput
+}
+
+export type FlightUncheckedUpdateManyWithoutPlaneInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  flightNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  departureTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  arrivalTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  originId?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+
+/**
+ * Count Type FlightCountOutputType
+ */
+
+export type FlightCountOutputType = {
+  passengers: number
+}
+
+export type FlightCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  passengers?: boolean | FlightCountOutputTypeCountPassengersArgs
+}
+
+/**
+ * FlightCountOutputType without action
+ */
+export type FlightCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the FlightCountOutputType
+   */
+  select?: Prisma.FlightCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * FlightCountOutputType without action
+ */
+export type FlightCountOutputTypeCountPassengersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PassengerWhereInput
+}
 
 
 export type FlightSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -751,12 +908,14 @@ export type FlightSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   flightNumber?: boolean
   departureTime?: boolean
   arrivalTime?: boolean
-  airplaneId?: boolean
-  departureAirportId?: boolean
-  arrivalAirportId?: boolean
-  airplane?: boolean | Prisma.AirplaneDefaultArgs<ExtArgs>
-  departureAirport?: boolean | Prisma.AirportDefaultArgs<ExtArgs>
-  arrivalAirport?: boolean | Prisma.AirportDefaultArgs<ExtArgs>
+  originId?: boolean
+  destinationId?: boolean
+  planeId?: boolean
+  passengers?: boolean | Prisma.Flight$passengersArgs<ExtArgs>
+  origin?: boolean | Prisma.AirportDefaultArgs<ExtArgs>
+  destination?: boolean | Prisma.AirportDefaultArgs<ExtArgs>
+  plane?: boolean | Prisma.PlaneDefaultArgs<ExtArgs>
+  _count?: boolean | Prisma.FlightCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["flight"]>
 
 export type FlightSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -764,12 +923,12 @@ export type FlightSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   flightNumber?: boolean
   departureTime?: boolean
   arrivalTime?: boolean
-  airplaneId?: boolean
-  departureAirportId?: boolean
-  arrivalAirportId?: boolean
-  airplane?: boolean | Prisma.AirplaneDefaultArgs<ExtArgs>
-  departureAirport?: boolean | Prisma.AirportDefaultArgs<ExtArgs>
-  arrivalAirport?: boolean | Prisma.AirportDefaultArgs<ExtArgs>
+  originId?: boolean
+  destinationId?: boolean
+  planeId?: boolean
+  origin?: boolean | Prisma.AirportDefaultArgs<ExtArgs>
+  destination?: boolean | Prisma.AirportDefaultArgs<ExtArgs>
+  plane?: boolean | Prisma.PlaneDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["flight"]>
 
 export type FlightSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -777,12 +936,12 @@ export type FlightSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   flightNumber?: boolean
   departureTime?: boolean
   arrivalTime?: boolean
-  airplaneId?: boolean
-  departureAirportId?: boolean
-  arrivalAirportId?: boolean
-  airplane?: boolean | Prisma.AirplaneDefaultArgs<ExtArgs>
-  departureAirport?: boolean | Prisma.AirportDefaultArgs<ExtArgs>
-  arrivalAirport?: boolean | Prisma.AirportDefaultArgs<ExtArgs>
+  originId?: boolean
+  destinationId?: boolean
+  planeId?: boolean
+  origin?: boolean | Prisma.AirportDefaultArgs<ExtArgs>
+  destination?: boolean | Prisma.AirportDefaultArgs<ExtArgs>
+  plane?: boolean | Prisma.PlaneDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["flight"]>
 
 export type FlightSelectScalar = {
@@ -790,43 +949,46 @@ export type FlightSelectScalar = {
   flightNumber?: boolean
   departureTime?: boolean
   arrivalTime?: boolean
-  airplaneId?: boolean
-  departureAirportId?: boolean
-  arrivalAirportId?: boolean
+  originId?: boolean
+  destinationId?: boolean
+  planeId?: boolean
 }
 
-export type FlightOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "flightNumber" | "departureTime" | "arrivalTime" | "airplaneId" | "departureAirportId" | "arrivalAirportId", ExtArgs["result"]["flight"]>
+export type FlightOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "flightNumber" | "departureTime" | "arrivalTime" | "originId" | "destinationId" | "planeId", ExtArgs["result"]["flight"]>
 export type FlightInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  airplane?: boolean | Prisma.AirplaneDefaultArgs<ExtArgs>
-  departureAirport?: boolean | Prisma.AirportDefaultArgs<ExtArgs>
-  arrivalAirport?: boolean | Prisma.AirportDefaultArgs<ExtArgs>
+  passengers?: boolean | Prisma.Flight$passengersArgs<ExtArgs>
+  origin?: boolean | Prisma.AirportDefaultArgs<ExtArgs>
+  destination?: boolean | Prisma.AirportDefaultArgs<ExtArgs>
+  plane?: boolean | Prisma.PlaneDefaultArgs<ExtArgs>
+  _count?: boolean | Prisma.FlightCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type FlightIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  airplane?: boolean | Prisma.AirplaneDefaultArgs<ExtArgs>
-  departureAirport?: boolean | Prisma.AirportDefaultArgs<ExtArgs>
-  arrivalAirport?: boolean | Prisma.AirportDefaultArgs<ExtArgs>
+  origin?: boolean | Prisma.AirportDefaultArgs<ExtArgs>
+  destination?: boolean | Prisma.AirportDefaultArgs<ExtArgs>
+  plane?: boolean | Prisma.PlaneDefaultArgs<ExtArgs>
 }
 export type FlightIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  airplane?: boolean | Prisma.AirplaneDefaultArgs<ExtArgs>
-  departureAirport?: boolean | Prisma.AirportDefaultArgs<ExtArgs>
-  arrivalAirport?: boolean | Prisma.AirportDefaultArgs<ExtArgs>
+  origin?: boolean | Prisma.AirportDefaultArgs<ExtArgs>
+  destination?: boolean | Prisma.AirportDefaultArgs<ExtArgs>
+  plane?: boolean | Prisma.PlaneDefaultArgs<ExtArgs>
 }
 
 export type $FlightPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Flight"
   objects: {
-    airplane: Prisma.$AirplanePayload<ExtArgs>
-    departureAirport: Prisma.$AirportPayload<ExtArgs>
-    arrivalAirport: Prisma.$AirportPayload<ExtArgs>
+    passengers: Prisma.$PassengerPayload<ExtArgs>[]
+    origin: Prisma.$AirportPayload<ExtArgs>
+    destination: Prisma.$AirportPayload<ExtArgs>
+    plane: Prisma.$PlanePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     flightNumber: string
     departureTime: Date
     arrivalTime: Date
-    airplaneId: string
-    departureAirportId: string
-    arrivalAirportId: string
+    originId: string
+    destinationId: string
+    planeId: string
   }, ExtArgs["result"]["flight"]>
   composites: {}
 }
@@ -1221,9 +1383,10 @@ readonly fields: FlightFieldRefs;
  */
 export interface Prisma__FlightClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  airplane<T extends Prisma.AirplaneDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AirplaneDefaultArgs<ExtArgs>>): Prisma.Prisma__AirplaneClient<runtime.Types.Result.GetResult<Prisma.$AirplanePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  departureAirport<T extends Prisma.AirportDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AirportDefaultArgs<ExtArgs>>): Prisma.Prisma__AirportClient<runtime.Types.Result.GetResult<Prisma.$AirportPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  arrivalAirport<T extends Prisma.AirportDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AirportDefaultArgs<ExtArgs>>): Prisma.Prisma__AirportClient<runtime.Types.Result.GetResult<Prisma.$AirportPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  passengers<T extends Prisma.Flight$passengersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Flight$passengersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PassengerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  origin<T extends Prisma.AirportDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AirportDefaultArgs<ExtArgs>>): Prisma.Prisma__AirportClient<runtime.Types.Result.GetResult<Prisma.$AirportPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  destination<T extends Prisma.AirportDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AirportDefaultArgs<ExtArgs>>): Prisma.Prisma__AirportClient<runtime.Types.Result.GetResult<Prisma.$AirportPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  plane<T extends Prisma.PlaneDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PlaneDefaultArgs<ExtArgs>>): Prisma.Prisma__PlaneClient<runtime.Types.Result.GetResult<Prisma.$PlanePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1257,9 +1420,9 @@ export interface FlightFieldRefs {
   readonly flightNumber: Prisma.FieldRef<"Flight", 'String'>
   readonly departureTime: Prisma.FieldRef<"Flight", 'DateTime'>
   readonly arrivalTime: Prisma.FieldRef<"Flight", 'DateTime'>
-  readonly airplaneId: Prisma.FieldRef<"Flight", 'String'>
-  readonly departureAirportId: Prisma.FieldRef<"Flight", 'String'>
-  readonly arrivalAirportId: Prisma.FieldRef<"Flight", 'String'>
+  readonly originId: Prisma.FieldRef<"Flight", 'String'>
+  readonly destinationId: Prisma.FieldRef<"Flight", 'String'>
+  readonly planeId: Prisma.FieldRef<"Flight", 'String'>
 }
     
 
@@ -1651,6 +1814,30 @@ export type FlightDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Limit how many Flights to delete.
    */
   limit?: number
+}
+
+/**
+ * Flight.passengers
+ */
+export type Flight$passengersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Passenger
+   */
+  select?: Prisma.PassengerSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Passenger
+   */
+  omit?: Prisma.PassengerOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PassengerInclude<ExtArgs> | null
+  where?: Prisma.PassengerWhereInput
+  orderBy?: Prisma.PassengerOrderByWithRelationInput | Prisma.PassengerOrderByWithRelationInput[]
+  cursor?: Prisma.PassengerWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PassengerScalarFieldEnum | Prisma.PassengerScalarFieldEnum[]
 }
 
 /**

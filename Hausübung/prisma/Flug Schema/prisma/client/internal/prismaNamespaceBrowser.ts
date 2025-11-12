@@ -15,50 +15,21 @@
  */
 
 import * as runtime from "@prisma/client/runtime/index-browser"
-
 export type * from '../models.ts'
 export type * from './prismaNamespace.ts'
-
 export const Decimal = runtime.Decimal
-
-
-export const NullTypes = {
-  DbNull: runtime.objectEnumValues.classes.DbNull as (new (secret: never) => typeof runtime.objectEnumValues.instances.DbNull),
-  JsonNull: runtime.objectEnumValues.classes.JsonNull as (new (secret: never) => typeof runtime.objectEnumValues.instances.JsonNull),
-  AnyNull: runtime.objectEnumValues.classes.AnyNull as (new (secret: never) => typeof runtime.objectEnumValues.instances.AnyNull),
-}
-/**
- * Helper for filtering JSON entries that have `null` on the database (empty on the db)
- *
- * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
- */
-export const DbNull = runtime.objectEnumValues.instances.DbNull
-/**
- * Helper for filtering JSON entries that have JSON `null` values (not empty on the db)
- *
- * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
- */
-export const JsonNull = runtime.objectEnumValues.instances.JsonNull
-/**
- * Helper for filtering JSON entries that are `Prisma.DbNull` or `Prisma.JsonNull`
- *
- * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
- */
-export const AnyNull = runtime.objectEnumValues.instances.AnyNull
-
-
 export const ModelName = {
   Airport: 'Airport',
-  Airplane: 'Airplane',
-  Flight: 'Flight'
+  Flight: 'Flight',
+  Passenger: 'Passenger',
+  Plane: 'Plane'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
 
-/*
+/**
  * Enums
  */
-
 export const TransactionIsolationLevel = runtime.makeStrictEnum({
   Serializable: 'Serializable'
 } as const)
@@ -76,27 +47,36 @@ export const AirportScalarFieldEnum = {
 export type AirportScalarFieldEnum = (typeof AirportScalarFieldEnum)[keyof typeof AirportScalarFieldEnum]
 
 
-export const AirplaneScalarFieldEnum = {
-  id: 'id',
-  manufacturer: 'manufacturer',
-  model: 'model',
-  capacity: 'capacity'
-} as const
-
-export type AirplaneScalarFieldEnum = (typeof AirplaneScalarFieldEnum)[keyof typeof AirplaneScalarFieldEnum]
-
-
 export const FlightScalarFieldEnum = {
   id: 'id',
   flightNumber: 'flightNumber',
   departureTime: 'departureTime',
   arrivalTime: 'arrivalTime',
-  airplaneId: 'airplaneId',
-  departureAirportId: 'departureAirportId',
-  arrivalAirportId: 'arrivalAirportId'
+  originId: 'originId',
+  destinationId: 'destinationId',
+  planeId: 'planeId'
 } as const
 
 export type FlightScalarFieldEnum = (typeof FlightScalarFieldEnum)[keyof typeof FlightScalarFieldEnum]
+
+
+export const PassengerScalarFieldEnum = {
+  id: 'id',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  email: 'email'
+} as const
+
+export type PassengerScalarFieldEnum = (typeof PassengerScalarFieldEnum)[keyof typeof PassengerScalarFieldEnum]
+
+
+export const PlaneScalarFieldEnum = {
+  id: 'id',
+  model: 'model',
+  capacity: 'capacity'
+} as const
+
+export type PlaneScalarFieldEnum = (typeof PlaneScalarFieldEnum)[keyof typeof PlaneScalarFieldEnum]
 
 
 export const SortOrder = {
