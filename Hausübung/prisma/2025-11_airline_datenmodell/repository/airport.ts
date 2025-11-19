@@ -1,5 +1,6 @@
 import { Prisma } from "../prisma/client/browser.ts";
 import { prisma } from "./db.ts";
+
 export async function count() {
     return await prisma.airport.count();
 }

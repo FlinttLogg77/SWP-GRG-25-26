@@ -4,9 +4,8 @@ datasource db {
 }
 
 generator client {
-    provider = "prisma-client"
-    output   = "client"
-    runtime  = "deno"
+    provider = "prisma-client-js"
+    output   = "../client"
 }
 
 model Airport {
