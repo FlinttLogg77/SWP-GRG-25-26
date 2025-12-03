@@ -1,3 +1,4 @@
+/// For Prisma 6, datasource url is here. For Prisma 7+, use prisma.config.ts instead.
 datasource db {
     provider = "sqlite"
     url      = env("DATABASE_URL")

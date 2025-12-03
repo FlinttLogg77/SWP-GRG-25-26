@@ -6,6 +6,7 @@
         "seed": "deno run -A --env-file=.env seed.ts"
     },
     "imports": {
+        "hono": "npm:hono@^4.0.0",
         "@faker-js/faker": "npm:@faker-js/faker@^10.1.0",
         "@prisma/client": "npm:@prisma/client@^6.18.0",
         "@std/assert": "jsr:@std/assert@1",
